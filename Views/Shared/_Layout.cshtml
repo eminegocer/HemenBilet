@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Hemen Bilet</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/site.css" rel="stylesheet" />
+    <style>
+        .header-container {
+            background-color: #f68e56;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header-container h1 {
+            color: white;
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .header-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .header-links a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .body-content {
+            margin-top: 30px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f5f5f5;
+            margin-top: 50px;
+        }
+    </style>
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1><a href="@Url.Action("Index", "Home")" style="color: white; text-decoration: none;">hemenbilet</a></h1>
+            <div class="header-links">
+                <a href="@Url.Action("FlightSearchPage", "Flight")">Uçuş Ara</a>
+                <a href="@Url.Action("Contact", "Home")">İletişim</a>
+                <a href="@Url.Action("Login", "Account")">Giriş Yap</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container body-content">
+        @RenderBody()
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Hemen Bilet | Tüm Hakları Saklıdır</p>
+        </footer>
+    </div>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

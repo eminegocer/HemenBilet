@@ -1,0 +1,124 @@
+@model List<HemenBiletProje.Models.Flight>
+@using HemenBiletProje.Models
+
+@{ ViewBag.Title = "Uçuş Listesi"; Layout =
+"~/Views/Shared/_Layout.cshtml"; var flightCardFactory = new
+StandardFlightCardFactory(); }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Content/FlightListPageStyle.css" />
+    <style>
+        /* Genel Ayarlar */
+        body {
+            font-family: "Consolas", monospace;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f9d29d, #f68e56);
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background-color: #f68e56;
+            padding: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+            header h1 {
+                margin: 0;
+                font-size: 24px;
+                color: #fff;
+            }
+
+        .header-links a {
+            margin-left: 15px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+            .header-links a:hover {
+                text-decoration: underline;
+            }
+
+        /* Ana İçerik */
+        .flight-list-section {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .flight-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fdfdfd;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+            .flight-item p {
+                margin: 5px 0;
+                font-size: 14px;
+            }
+
+            .flight-item .flight-price {
+                color: #f68e56;
+                font-weight: bold;
+            }
+
+        .btn-primary {
+            background-color: #f68e56;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+            .btn-primary:hover {
+                background-color: #f45d2d;
+            }
+
+        .no-flights {
+            text-align: center;
+            color: #666;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ana İçerik -->
+    <main class="flight-list-section">
+        <h2 style="text-align: center; color: #f68e56">Uygun Uçuşlar</h2>
+
+        @if (Model != null && Model.Any())
+        {
+            foreach (var flight in Model)
+            {
+                var
+                flightCard = flightCardFactory.CreateFlightCard(flight);
+                @Html.Raw(flightCard.RenderHtml()) 
+            }
+        }
+        else
+        {
+
+            <p class="no-flights">Aradığınız kriterlere uygun uçuş bulunamadı.</p>
+        }
+    </main>
+</body>
+</html>
+</HemenBiletProje.Models.Flight>

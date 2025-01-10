@@ -1,0 +1,88 @@
+﻿@model HemenBiletProje.Models.TicketCardViewModel
+
+@{
+    ViewBag.Title = "Bilet Kartı";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Content/TicketCardDisplayStyle.css" />
+    <style>
+        /* Genel Ayarlar */
+        body {
+            font-family: "Consolas", monospace;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f9d29d, #f68e56);
+            color: #333;
+        }
+
+        /* Ana İçerik */
+        .ticket-card-section {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .ticket-card-header {
+            text-align: center;
+            color: #f68e56;
+            margin-bottom: 20px;
+        }
+
+        .ticket-card-details {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .ticket-card-details p {
+            margin: 10px 0;
+        }
+
+        .btn-primary {
+            display: block;
+            width: 100%;
+            background-color: #f68e56;
+            border: none;
+            color: #fff;
+            padding: 10px 0;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 16px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            background-color: #f45d2d;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ana İçerik -->
+    <main class="ticket-card-section">
+        <h2 class="ticket-card-header">Bilet Kartı</h2>
+        <div class="ticket-card-details">
+            <p><strong>Ad:</strong> @Model.FirstName</p>
+            <p><strong>Soyad:</strong> @Model.LastName</p>
+            <p><strong>Email:</strong> @Model.Email</p>
+            <p><strong>Telefon:</strong> @Model.PhoneNumber</p>
+            <p><strong>Kalkış Noktası:</strong> @Model.FlightDetails.Airport</p>
+            <p><strong>Varış Noktası:</strong> @Model.FlightDetails.ArrivalAirport</p>
+            <p><strong>Uçuş Tarihi:</strong> @Model.FlightDetails.FlightDate</p>
+            <p><strong>Bilet Fiyatı:</strong> @Model.FlightDetails.Price</p>
+            <p><strong>Koltuk Numarası:</strong> @Model.SeatDetails.SeatNumber</p>
+        </div>
+        <a href="@Url.Action("Payment", "Payment", new { flightId = Model.FlightDetails.FlightId, seatId = Model.SeatDetails.SeatId })" class="btn-primary">Ödeme Yap</a>
+    </main>
+</body>
+</html>

@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Ana Sayfa";
+}
+
+<div class="jumbotron text-center" style="background: linear-gradient(135deg, #f9d29d, #f68e56); color: white; padding: 50px;">
+    <h1>Hemen Bilet ile Seyahat Özgürlüğü</h1>
+    <p class="lead">En uygun fiyatlı uçak biletleri ve özel kampanyalar için doğru adrestesiniz!</p>
+    <p><a href="@Url.Action("FlightSearchPage", "Flight")" class="btn btn-lg" style="background-color: white; color: #f68e56;">Hemen Bilet Al</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <h3>7/24 Hizmet</h3>
+                <p>Müşteri hizmetlerimiz her zaman yanınızda.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <h3>En İyi Fiyat</h3>
+                <p>Uygun fiyatlar ve özel kampanyalarla bütçenizi koruyun.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <h3>Kolay Rezervasyon</h3>
+                <p>Birkaç tıklama ile biletinizi alın, seyahatinizi planlayın.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.3s ease;
+        border: none;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .btn-lg {
+        padding: 15px 30px;
+        font-size: 1.2em;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-lg:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .jumbotron {
+        border-radius: 15px;
+        margin-top: 20px;
+    }
+</style>

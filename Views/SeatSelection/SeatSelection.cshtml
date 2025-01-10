@@ -1,0 +1,86 @@
+﻿@model IEnumerable<HemenBiletProje.Entities.Seat>
+  @{ ViewBag.Title = "Koltuk Seçimi"; Layout = "~/Views/Shared/_Layout.cshtml";
+  } @section Styles {
+  <link href="~/Content/Seat.css" rel="stylesheet" />
+  }
+
+  <div class="container">
+    <div class="airplane-container">
+      <div class="airplane">
+        <div class="cockpit">
+          <h1>Koltuk Seçimi</h1>
+        </div>
+        <div class="exit exit--front"></div>
+
+        <ol class="cabin fuselage">
+          @{ var rows = new[] { "A", "B", "C", "D" }; foreach (var row in rows)
+          {
+          <li class="row row--@row">
+            <ol class="seats" type="A">
+              @for (int seatNum = 1; seatNum <= 6; seatNum++) { var
+              currentSeatNumber = $"{row}{seatNum}"; var seat =
+              Model.FirstOrDefault(s => s.SeatNumber == currentSeatNumber); var
+              isReserved = seat?.IsReserved ?? false;
+
+              <li class="seat">
+                <input type="checkbox" id="@currentSeatNumber"
+                class="seat-checkbox" value="@(seat?.SeatId)"
+                data-seat="@currentSeatNumber" @(isReserved ? "disabled" : "")
+                />
+                <label for="@currentSeatNumber">@currentSeatNumber</label>
+              </li>
+
+              if (seatNum == 3) { @:
+              <li class="aisle"></li>
+              } }
+            </ol>
+          </li>
+          } }
+        </ol>
+        <div class="exit exit--back"></div>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item">
+          <span class="seat-demo available"></span>
+          <span>Müsait</span>
+        </div>
+        <div class="legend-item">
+          <span class="seat-demo occupied"></span>
+          <span>Dolu</span>
+        </div>
+      </div>
+
+      @using (Html.BeginForm("ReserveSeat", "SeatSelection", FormMethod.Post)) {
+      @Html.AntiForgeryToken()
+      <input type="hidden" id="selectedSeatId" name="SeatId" />
+      <input
+        type="hidden"
+        id="flightId"
+        name="flightId"
+        value="@ViewBag.FlightId"
+      />
+
+      <div class="seat-selection-info">
+        <div id="selectedSeatInfo">
+          Seçilen Koltuk: <strong id="seatNumber"></strong>
+        </div>
+        <button type="submit" class="btn-reserve" id="reserveButton" disabled>
+          Koltuğu Rezerve Et
+        </button>
+      </div>
+      }
+    </div>
+  </div>
+
+  @section Scripts {
+  <!-- jQuery Kütüphanesi -->
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    crossorigin="anonymous"
+  ></script>
+
+  <!-- Seat.js Dosyası -->
+  <script src="~/Scripts/Seat.js"></script>
+  }
+</HemenBiletProje.Entities.Seat>

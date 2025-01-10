@@ -1,0 +1,117 @@
+﻿@{
+    ViewBag.Title = "Uçuş Ara";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/FlightStyle.css" rel="stylesheet" />
+
+<main>
+    <div class="search-container">
+        <h2>Uçuş Ara</h2>
+
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <div class="alert alert-danger">
+                @ViewBag.ErrorMessage
+            </div>
+        }
+
+        @using (Html.BeginForm("FlightSearchPage", "Flight", FormMethod.Post))
+        {
+            <!-- Nereden ve Nereye -->
+            <div class="form-row">
+                <label for="from">Nereden</label>
+                <select id="from" name="from" required>
+                    <option value="">Şehir veya Havalimanı Seçin</option>
+                    @if (ViewBag.DepartureAirports != null)
+                    {
+                        foreach (var airport in ViewBag.DepartureAirports)
+                        {
+                            <option value="@airport">@airport</option>
+                        }
+                    }
+                </select>
+
+                <span id="swapIcon" class="swap-icon" onclick="swapInputs()">⇄</span>
+
+                <label for="to">Nereye</label>
+                <select id="to" name="to" required>
+                    <option value="">Varış Noktası Seçin</option>
+                    @if (ViewBag.ArrivalAirports != null)
+                    {
+                        foreach (var airport in ViewBag.ArrivalAirports)
+                        {
+                            <option value="@airport">@airport</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <!-- Tarih Seçimi -->
+            <div class="form-row">
+                <div>
+                    <label for="departureDate">Gidiş Tarihi</label>
+                    <input type="date" id="departureDate" name="departureDate" required>
+                </div>
+            </div>
+
+            <!-- Bilet Ara Butonu -->
+            <div class="form-row">
+                <button type="submit" class="btn-primary">Bilet Ara</button>
+            </div>
+        }
+    </div>
+
+    <!-- Popüler Destinasyonlar -->
+    <section class="popular-destinations">
+        <h2>POPÜLER DESTİNASYONLAR</h2>
+        <div class="destination-list">
+            <div class="destination-item">
+                <img src="/Content/images/newyork.jpg" alt="New York">
+                <div class="destination-overlay">NEW YORK</div>
+            </div>
+            <div class="destination-item">
+                <img src="/Content/images/istanbul.jpg" alt="İstanbul">
+                <div class="destination-overlay">İSTANBUL</div>
+            </div>
+            <div class="destination-item">
+                <img src="/Content/images/amsterdam.jpg" alt="Amsterdam">
+                <div class="destination-overlay">AMSTERDAM</div>
+            </div>
+            <div class="destination-item">
+                <img src="/Content/images/tokyo.jpg" alt="Tokyo">
+                <div class="destination-overlay">TOKYO</div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div id="contactPopup" class="popup">
+    <div class="popup-content">
+        <span id="closePopup" class="popup-close" onclick="closePopup()">&times;</span>
+        <h2>İletişim Bilgileri</h2>
+        <p><strong>Email:</strong> hemenbilet@gmail.com</p>
+        <p><strong>Telefon:</strong> +90 555 123 4567</p>
+        <p><strong>Adres:</strong> 1234 Hemenbilet Cad., İstanbul, Türkiye</p>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/FlightScript.js"></script>
+    <script>
+        // Nereden ve Nereye alanlarını değiştir
+        function swapInputs() {
+            const fromInput = document.getElementById("from");
+            const toInput = document.getElementById("to");
+            const temp = fromInput.value;
+            fromInput.value = toInput.value;
+            toInput.value = temp;
+        }
+
+        // Popup'ı kapatma
+        function closePopup() {
+            const popup = document.getElementById("contactPopup");
+            popup.style.display = "none";
+        }
+    </script>
+}

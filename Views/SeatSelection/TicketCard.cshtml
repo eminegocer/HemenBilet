@@ -1,0 +1,106 @@
+﻿@model HemenBiletProje.Models.TicketCardViewModel
+    @{
+        ViewBag.Title = "TicketInformation"; 
+     }
+
+<style>
+    /* Genel Ayarlar */
+    body {
+        font-family: "Consolas", monospace;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #f9d29d, #f68e56);
+        color: #333;
+    }
+
+    /* Form Stilleri */
+    form {
+        max-width: 600px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    .btn-primary {
+        background-color: #f68e56;
+        border: none;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 14px;
+        margin-top: 20px; 
+    }
+
+    .btn-primary:hover {
+        background-color: #f45d2d;
+    }
+
+    .alert {
+        margin-bottom: 20px;
+        padding: 10px;
+        border-radius: 4px;
+    }
+
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+</style>
+
+<h2>Lütfen Gerekli Bilgileri Girin.</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+} @if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<form asp-action="TicketCardDisplay" method="post">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label for="FirstName">First Name</label>
+        <input type="text" class="form-control" id="FirstName" name="FirstName" required />
+    </div>
+
+    <div class="form-group">
+        <label for="LastName">Last Name</label>
+        <input type="text" class="form-control" id="LastName" name="LastName" required />
+    </div>
+
+    <div class="form-group">
+        <label for="PhoneNumber">Phone Number</label>
+        <input type="tel" class="form-control" id="PhoneNumber" name="PhoneNumber" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Email">Email Address</label>
+        <input type="email" class="form-control" id="Email" name="Email" required />
+    </div>
+
+    <input type="hidden" name="FlightId" value="@ViewBag.FlightId" />
+    <input type="hidden" name="SeatId" value="@ViewBag.SeatId" />
+
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+</form>

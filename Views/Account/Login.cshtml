@@ -1,0 +1,280 @@
+﻿@model HemenBiletProje.Entities.LoginUser
+
+@{
+    ViewBag.Title = "Login";
+    Layout = null; // Siyah kısmı kaldırmak için layout'u devre dışı bırakıyoruz.
+}
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="/Content/styles.css">
+    <style>
+        /* Genel Ayarlar */
+        body {
+            font-family: "Consolas", monospace;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f68e56, #f0c27b);
+            color: #fff;
+        }
+
+        /* Header Ayarları */
+        header {
+            padding: 20px;
+            text-align: left;
+            background: #f68e56;
+        }
+
+            header h1 {
+                margin: 0;
+                font-size: 24px;
+                color: #fff;
+            }
+
+        /* Konteyner */
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            width: 50%;
+            margin: 100px auto;
+            color: #5a5a5a;
+        }
+
+        /* Form Ayarları */
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+            .form-group label {
+                flex: 0 0 150px;
+                color: #5a5a5a;
+                text-align: right;
+                margin-right: 10px;
+            }
+
+            .form-group input {
+                flex: 1;
+                padding: 10px;
+                font-size: 14px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+        .btn-primary {
+            background-color: #f68e56;
+            border: none;
+            font-size: 14px;
+            padding: 8px 20px;
+            border-radius: 4px;
+        }
+
+            .btn-primary:hover {
+                background-color: #f45d2d;
+            }
+
+        .link-button {
+            background: none;
+            border: none;
+            color: #f68e56;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 0;
+            text-decoration: underline;
+        }
+
+            .link-button:hover {
+                color: #f45d2d;
+            }
+
+        a {
+            color: #f68e56;
+            text-decoration: none;
+        }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+        /* Modal Popup */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: rgba(255, 255, 255, 0.9);
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 40%;
+            color: #5a5a5a;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            text-align: center;
+            font-size: 18px;
+            font-family: "Consolas", monospace;
+            margin-bottom: 15px;
+        }
+
+        .modal-close {
+            float: right;
+            color: #f68e56;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            .modal-close:hover {
+                color: #f45d2d;
+            }
+
+        .modal .form-group {
+            margin-bottom: 10px;
+        }
+
+        .modal-footer {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+            .modal-footer button {
+                background-color: #f68e56;
+                border: none;
+                padding: 8px 20px;
+                border-radius: 4px;
+                font-size: 14px;
+                color: white;
+            }
+
+                .modal-footer button:hover {
+                    background-color: #f45d2d;
+                }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>hemenbilet</h1>
+    </header>
+
+    <div class="container">
+        <h2 style="text-align: center;">Giriş Yap</h2>
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label">E-mail</label>
+                <input asp-for="UserName" class="form-control" />
+                <div asp-validation-for="UserName" class="text-danger"></div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password" class="control-label">Şifre</label>
+                <input type="password" asp-for="Password" class="form-control" />
+                <div asp-validation-for="Password" class="text-danger"></div>
+            </div>
+
+            <div style="text-align: center;">
+                <button type="submit" class="btn btn-primary">Giriş Yap</button>
+            </div>
+
+            <div style="text-align: center; margin-top: 15px;">
+                Henüz hesabınız yok mu?
+                <button class="link-button" id="openModal">Kaydol</button>
+            </div>
+
+            <div style="text-align: center; margin-top: 10px;">
+                <a href="/Admin/Login">Admin Girişi</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" id="closeModal">&times;</span>
+            <div class="modal-header">Kayıt Ol</div>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="firstName">Ad</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Soyad</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="birthDate">Doğum Tarihi</label>
+                    <input type="date" id="birthDate" name="birthDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerUsername">E-mail</label>
+                    <input type="text" id="registerUsername" name="registerUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Şifre</label>
+                    <input type="password" id="registerPassword" name="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Şifre Tekrar</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit">Kaydol</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Modal aç/kapa
+        const modal = document.getElementById("registerModal");
+        const openModal = document.getElementById("openModal");
+        const closeModal = document.getElementById("closeModal");
+
+        openModal.addEventListener("click", function (e) {
+            e.preventDefault();
+            modal.style.display = "block";
+        });
+
+        closeModal.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener("click", function (e) {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+
+        // Şifre doğrulama
+        document.getElementById("registerForm").addEventListener("submit", function (e) {
+            const password = document.getElementById("registerPassword").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (password !== confirmPassword) {
+                alert("Şifreler eşleşmiyor!");
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+﻿<style>
+    .confirmation-container {
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 500px;
+        background-color: #f9f9f9;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        .confirmation-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .confirmation-container p {
+            font-size: 16px;
+            margin: 10px 0;
+            color: #555;
+        }
+
+    .home-button {
+        display: block;
+        width: 100%;
+        max-width: 200px;
+        margin: 20px auto 0;
+        padding: 10px 20px;
+        font-size: 16px;
+        text-align: center;
+        text-decoration: none;
+        color: white;
+        background-color: #f68e56; /* Turuncu renk */
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .home-button:hover {
+            background-color: #e67e22; /* Hover için koyu bir turuncu */
+        }
+</style>
+
+<div class="confirmation-container">
+    <h2>Uçuş Onayı</h2>
+
+    <p><strong>Uçuş Numarası:</strong> @Model.FlightId</p>
+    <p><strong>Kalkış Noktası:</strong> @Model.Airport</p>
+    <p><strong>Varış Noktası:</strong> @Model.ArrivalAirport</p>
+    <p><strong>Koltuk Numarası:</strong> @Model.SeatNumber</p>
+
+    <p style="text-align: center;">İyi uçuşlar dileriz!</p>
+
+    <a href="@Url.Action("Index", "Home")" class="home-button">Anasayfa</a>
+</div>

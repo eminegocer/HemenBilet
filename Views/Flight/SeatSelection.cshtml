@@ -1,0 +1,41 @@
+<div class="seat-container">
+  <!-- Mevcut koltuk grid yapısı -->
+  <div class="seats">
+    @for (int i = 1; i <= 30; i++) {
+    <div class="seat" data-seat-number="@i">@i</div>
+    }
+  </div>
+
+  <!-- Form eklendi -->
+  <form id="reservationForm" method="post" action="@Url.Action("Payment", "Flight")">
+    <input type="hidden" name="flightId" value="@Model.flightId" />
+    <input type="hidden" id="seatNumber" name="seatNumber" />
+    <button type="submit" id="reserveButton" class="btn btn-primary" disabled>
+      Rezerve Et
+    </button>
+  </form>
+</div>
+
+@section Scripts {
+<script>
+  $(document).ready(function () {
+    let selectedSeat = null;
+
+    // Koltuk seçimi işlemi
+    $(".seat").click(function () {
+      // Önceki seçili koltuğun seçimini kaldır
+      $(".seat").removeClass("selected");
+
+      // Yeni koltuğu seç
+      $(this).addClass("selected");
+      selectedSeat = $(this).data("seat-number");
+      
+      // Seçilen koltuğu hidden input'a ata
+      $("#seatNumber").val(selectedSeat);
+
+      // Rezerve et butonunu aktifleştir
+      $("#reserveButton").prop("disabled", false);
+    });
+  });
+</script>
+}
